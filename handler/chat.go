@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
 
 	"bitbucket.use.dom.carezen.net/grpc-example/pb"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 type Chat struct {
@@ -16,5 +18,8 @@ func (s *Chat) SayHello(ctx context.Context, in *pb.Message) (*pb.Message, error
 	log.Printf("Receive message from client: %v", in)
 
 	user, _ := ctx.Value("user").(string)
-	return &pb.Message{Body: fmt.Sprintf("Hello From %s the Server:ChatHandler!", user)}, nil
+	return &pb.Message{
+		LastUpdated: timestamppb.New(time.Now().UTC()),
+		Body: fmt.Sprintf("Hello From %s the Server:ChatHandler!", user),
+		}, nil
 }

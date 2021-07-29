@@ -14,6 +14,14 @@ Concrete case
 
     protoc --go_out=plugins=grpc:chat chat.proto
 
+
+export PATH="$PATH:$(go env GOPATH)/bin"
+
+
+protoc --go_out=../pb/ --go_opt=paths=source_relative \
+    --go-grpc_out=../pb/ --go-grpc_opt=paths=source_relative \
+    *.proto
+
 ###Some info on gRPC
 
 gRPC utilizes HTTP/2 whereas REST utilizes HTTP 1.1
